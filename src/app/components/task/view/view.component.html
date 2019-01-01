@@ -1,0 +1,136 @@
+<mat-tab-group [selectedIndex]=1>
+  <mat-tab label="Add Task">
+    <app-add></app-add>
+  </mat-tab>
+  <mat-tab label="View Task">
+    <div>
+      <table>
+        <tr>
+          <td>
+            <span>Task:</span>
+          </td>
+          <td [attr.colspan]="2+1">
+            <mat-form-field appearance="fill" class="full-td">
+              <mat-label></mat-label>
+              <input matInput placeholder="">
+            </mat-form-field>
+          </td>
+          <td>
+            <span>Parent Task:</span>
+          </td>
+          <td [attr.colspan]="3">
+            <mat-form-field appearance="fill" class="full-td">
+              <mat-label></mat-label>
+              <input matInput placeholder="">
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>Priority From:</span>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label></mat-label>
+              <input matInput placeholder="">
+            </mat-form-field>
+          </td>
+          <td>
+            <span>Priority To:</span>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label></mat-label>
+              <input matInput placeholder="">
+            </mat-form-field>
+          </td>
+          <td>
+            <span>Start Date:</span>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label></mat-label>
+              <input matInput placeholder="">
+            </mat-form-field>
+          </td>
+          <td>
+            <span>End Date:</span>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label></mat-label>
+              <input matInput placeholder="">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <mat-divider></mat-divider>
+    <div>
+      <mat-grid-list cols="7" style="width:100%">
+        <mat-grid-tile>
+          <div>
+            <div>Task
+            </div>
+            <div>
+              <mat-card>
+                <mat-card-content>
+                  Task description
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <div>Parent
+            </div>
+            <div>
+              <mat-card>
+                <mat-card-content>
+                  Parent Task description
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <div>Priority</div>
+            <div>
+              <mat-form-field>
+                <input matInput [disabled]=true>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <div>Start Date</div>
+            <div>
+              <mat-form-field>
+                <input matInput [disabled]=true>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <div>End Date</div>
+            <div>
+              <mat-form-field>
+                <input matInput [disabled]=true>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <button mat-raised-button color='primary' [routerLink]="['../edit']">Edit</button>
+            <button mat-raised-button color='warn'>End Task</button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </mat-tab>
+</mat-tab-group>
