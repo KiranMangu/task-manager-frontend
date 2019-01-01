@@ -67,70 +67,68 @@
     </div>
     <mat-divider></mat-divider>
     <div>
-      <mat-grid-list cols="7" style="width:100%">
-        <mat-grid-tile>
-          <div>
-            <div>Task
-            </div>
+      <table style="width:100%">
+        <tr *ngFor='let taskObj of tasks'>
+          <td>
             <div>
-              <mat-card>
-                <mat-card-content>
-                  Task description
-                </mat-card-content>
-              </mat-card>
+              <div>
+                Task
+              </div>
+              <div>
+                <mat-card>
+                  <mat-card-content>
+                    {{taskObj.task}}
+                  </mat-card-content>
+                </mat-card>
+              </div>
             </div>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div>
-            <div>Parent
-            </div>
+          </td>
+          <td>
             <div>
-              <mat-card>
-                <mat-card-content>
-                  Parent Task description
-                </mat-card-content>
-              </mat-card>
+              <div>
+                Parent Task
+              </div>
+              <div>
+                <mat-card>
+                  <mat-card-content>
+                    {{taskObj.task}}
+                  </mat-card-content>
+                </mat-card>
+              </div>
             </div>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div>
-            <div>Priority</div>
+          </td>
+          <td>
             <div>
-              <mat-form-field>
-                <input matInput [disabled]=true>
-              </mat-form-field>
+              <div>Priority</div>
+              <div>
+                <span>{{taskObj.priority}}</span>
+              </div>
             </div>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div>
-            <div>Start Date</div>
+          </td>
+          <td>
             <div>
-              <mat-form-field>
-                <input matInput [disabled]=true>
-              </mat-form-field>
+              <div>Start Date</div>
+              <div>
+                <span>{{taskObj.startDate}}</span>
+              </div>
             </div>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div>
-            <div>End Date</div>
+          </td>
+          <td>
             <div>
-              <mat-form-field>
-                <input matInput [disabled]=true>
-              </mat-form-field>
+              <div>End Date</div>
+              <div>
+                <span>{{taskObj.endDate}}</span>
+              </div>
             </div>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div>
-            <button mat-raised-button color='primary' [routerLink]="['../edit']">Edit</button>
-            <button mat-raised-button color='warn'>End Task</button>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+          </td>
+          <td>
+            <div>
+              <button mat-raised-button color='primary' [routerLink]="['../edit']" class="btn">Edit</button>
+              <button mat-raised-button color='warn' class="btn">End Task</button>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
   </mat-tab>
 </mat-tab-group>

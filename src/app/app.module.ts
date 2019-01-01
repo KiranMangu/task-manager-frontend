@@ -2,12 +2,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MatToolbarModule } from '@angular/material';
-import { MatTabsModule } from '@angular/material'
-import { MatDividerModule, MatListModule, MatInputModule } from '@angular/material'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatGridListModule, MatCardModule } from '@angular/material'
-import { MatButtonModule, MatSliderModule } from '@angular/material'
+import { MatTabsModule } from '@angular/material';
+import { MatDividerModule, MatListModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatSliderModule } from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material';
+
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,10 +47,14 @@ const routes: Routes = [
     MatFormFieldModule, MatInputModule,
     MatGridListModule, MatCardModule,
     MatButtonModule, MatSliderModule,
+    MatDatepickerModule, MatNativeDateModule,
+    MatAutocompleteModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    ClarityModule
+    ClarityModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]

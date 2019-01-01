@@ -1,68 +1,99 @@
-<mat-card>
-  <mat-card-content>
-    <table>
-      <tr>
-        <td>
-          <mat-label>Task:</mat-label>
-        </td>
-        <td></td>
-        <td>
-          <mat-form-field>
-            <input matInput>
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <mat-label>Priority:</mat-label>
-        </td>
-        <td></td>
-        <td>
-          <mat-slider style="width:100%"></mat-slider>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <mat-label>Parent Task:</mat-label>
-        </td>
-        <td></td>
-        <td>
-          <mat-form-field>
-            <input matInput>
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <mat-label>Start Date:</mat-label>
-        </td>
-        <td></td>
-        <td>
-          <mat-form-field>
-            <input matInput>
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <mat-label>End Date:</mat-label>
-        </td>
-        <td></td>
-        <td>
-          <mat-form-field>
-            <input matInput>
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button mat-raised-button>Add</button>
-        </td>
-        <td></td>
-        <td>
-          <button mat-raised-button>Reset</button>
-        </td>
-      </tr>
-    </table>
-  </mat-card-content>
-</mat-card>
+<div>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]='taskGroup'>
+        <div>
+          {{taskGroup.value | json}}
+        </div>
+        <table>
+          <tr>
+            <td>
+              <mat-label>Task:</mat-label>
+            </td>
+            <td></td>
+            <td>
+              <mat-form-field>
+                <input matInput formControlName='task' #task>
+                <!-- <mat-error *ngIf = 'task.invalid'> -->
+                <!--above statement not behaving as expected not working -->
+                <mat-error>
+                  <div>Please enter Task </div>
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-label>Priority:</mat-label>
+            </td>
+            <td></td>
+            <td>
+              <mat-slider thumbLabel style="width:95%" min='0' max='30' step='1' value='0' #priority></mat-slider>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-label>Parent Task:</mat-label>
+            </td>
+            <td></td>
+            <td>
+              <!-- <mat-form-field>
+                <input matInput formControlName='parentTask' #parentTask>
+              </mat-form-field> -->
+              <mat-form-field>
+                <input matInput formControlName="parentTask" aria-label="Number" [matAutocomplete]="auto" #parentTask>
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let task of _tasks" [value]="task.task">
+                    {{task.task}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-label>Start Date:</mat-label>
+            </td>
+            <td></td>
+            <td>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" formControlName='startDate' #startDate>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>
+                  Please select Start Date
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-label>End Date:</mat-label>
+            </td>
+            <td></td>
+            <td>
+              <mat-form-field>
+                <input matInput [matDatepicker]="endpicker" formControlName='endDate' #endDate>
+                <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                <mat-datepicker #endpicker></mat-datepicker>
+                <!-- <mat-error *ngIf='endDate.invalid && endDate.touched'> -->
+                <mat-error>
+                  Please select Start Date
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button mat-raised-button [disabled]='taskGroup.invalid && taskGroup.touched' (click)='addTask(task.value, priority.value, startDate.value, endDate.value, parentTask.value)'>Add</button>
+            </td>
+            <td></td>
+            <td>
+              <button mat-raised-button>Reset</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

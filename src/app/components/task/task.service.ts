@@ -21,12 +21,12 @@ export class TaskService {
     return this._http.get(`${this.uri}/task/:${id}`);
   }
 
-  createTask(task, startDate, endDate, finished, priority, parentTask): any {
+  createTask(task, startDate, endDate, priority, parentTask): any {
     const newTask = {
       task: task,
       startDate: startDate,
       endDate: endDate,
-      finished: finished,
+      // finished: finished,
       priority: priority,
       parentTask: parentTask
     }
