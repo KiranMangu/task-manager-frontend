@@ -3,6 +3,7 @@ import { TaskService } from '../task.service';
 import { Task } from '../task';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-add',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class AddComponent implements OnInit {
   taskGroup: FormGroup;
   _tasks: Task[];
+  _selectedTask: any;
   //priorityValue: number = 0;
 
   constructor(private _tskSrv: TaskService, private _fb: FormBuilder, private _router: Router) {
@@ -27,7 +29,15 @@ export class AddComponent implements OnInit {
   get task() {
     return this.taskGroup.get('task');
   }
-
+  displayFn(task) {
+    // this._selectedTask = task._id;
+    // console.log('dis ' + this._selectedTask);
+    return task.task;
+  }
+  // get parentTask() {
+  //   this._selectedTask = this.taskGroup.get('parentTask');
+  //   return "this._selectedTask.task";
+  // }
   get startDate() {
     return this.taskGroup.get('startDate');
   }
@@ -40,16 +50,20 @@ export class AddComponent implements OnInit {
   }
 
   addTask(task, priority, startDate, endDate, parentTask): any {
-    console.log('task' + task);
-    console.log('priority:' + priority);
-    console.log('startDate' + startDate);
-    console.log('endDate:' + endDate);
-    console.log('parentTask:' + parentTask);
-    // this._tskSrv.createTask(task, startdate, enddate, priority, parentTask)
-    //   .subscribe(() => {
-    //     this._router.navigate['/view'];, startdate, enddate, priority, parentTask
-    //   })
+    // console.log('task' + task);
+    // console.log('priority:' + priority);
+    // console.log('startDate' + startDate);
+    // console.log('endDate:' + endDate);
+    // console.log('parentTask:' + parentTask);
+    this._selectedTask = this._tasks.find(task => task.task === parentTask)
+    // console.log('parentTask2: ' + this._selectedTask._id);
+    this._tskSrv.createTask(task, startDate, endDate, priority, this._selectedTask)
+      .subscribe(() => {
+        console.log('Inserted');
+        this._router.navigate['/api/view'];
+      })
   }
+
   getTasks(): any {
     this._tskSrv.getTasks()
       .subscribe((tasks) => {
