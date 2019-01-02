@@ -10,6 +10,7 @@ import { MatButtonModule, MatSliderModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,7 +29,7 @@ import { TaskService } from './components/task/task.service';
 
 const routes: Routes = [
   { path: 'create', component: AddComponent },
-  { path: 'edit', component: EditComponent },
+  { path: 'edit/:id', component: EditComponent },
   { path: 'view', component: ViewComponent },
   { path: '', redirectTo: 'view', pathMatch: 'full' }
 ];
@@ -48,7 +49,7 @@ const routes: Routes = [
     MatGridListModule, MatCardModule,
     MatButtonModule, MatSliderModule,
     MatDatepickerModule, MatNativeDateModule,
-    MatAutocompleteModule,
+    MatAutocompleteModule, MatSnackBarModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,

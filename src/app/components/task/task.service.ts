@@ -18,7 +18,7 @@ export class TaskService {
   }
 
   getTasksById(id): any {
-    return this._http.get(`${this.uri}/task/:${id}`);
+    return this._http.get(`${this.uri}/task/${id}`);
   }
 
   createTask(task, startDate, endDate, priority, parentTask): any {
@@ -33,8 +33,9 @@ export class TaskService {
     return this._http.post(`${this.uri}/task/create`, newTask);
   }
 
-  updateTask(task, startDate, endDate, priority, parentTask): any {
+  updateTask(task, startDate, endDate, priority, parentTask, id): any {
     let updateTask = {
+      id: id,
       task: task,
       startDate: startDate,
       endDate: endDate,

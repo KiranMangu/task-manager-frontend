@@ -60,7 +60,7 @@ export class AddComponent implements OnInit {
     this._tskSrv.createTask(task, startDate, endDate, priority, this._selectedTask)
       .subscribe(() => {
         console.log('Inserted');
-        this._router.navigate['/api/view'];
+        this._router.navigate(['/view']);
       })
   }
 

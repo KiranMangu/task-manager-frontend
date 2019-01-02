@@ -41,7 +41,7 @@
                 <input matInput formControlName='parentTask' #parentTask>
               </mat-form-field> -->
               <mat-form-field>
-                <input matInput formControlName="parentTask" aria-label="Number" [matAutocomplete]="auto"  #parentTask>
+                <input matInput formControlName="parentTask" aria-label="Number" [matAutocomplete]="auto" #parentTask>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                   <mat-option *ngFor="let task of _tasks" [value]="task">
                     {{task.task}}

@@ -123,7 +123,7 @@
           </td>
           <td>
             <div>
-              <button mat-raised-button color='primary' [routerLink]="['../edit']" class="btn">Edit</button>
+              <button mat-raised-button color='primary' (click)='editView(taskObj.task)' class="btn">Edit</button>
               <button mat-raised-button color='warn' class="btn">End Task</button>
             </div>
           </td>
