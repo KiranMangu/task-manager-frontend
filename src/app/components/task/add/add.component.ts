@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../task.service';
-import { Task } from '../task';
+import { Component, OnInit, Output } from '@angular/core';
+import { TaskService } from '../service/task.service';
+import { Task } from '../model/taskModel';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JsonPipe } from '@angular/common';
+import { UtilityService } from '../../../utility.service';
+// import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add',
@@ -14,16 +15,17 @@ export class AddComponent implements OnInit {
   taskGroup: FormGroup;
   _tasks: Task[];
   _selectedTask: any;
+  // @Output() valueChange = new EventEmitter();
   //priorityValue: number = 0;
 
-  constructor(private _tskSrv: TaskService, private _fb: FormBuilder, private _router: Router) {
+  constructor(private _tskSrv: TaskService, private _fb: FormBuilder, private _router: Router, private _util: UtilityService) {
     this.taskGroup = this._fb.group({
       task: ['', [Validators.required]],
       priority: [''],
       parentTask: [''],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]]
-    });
+    }, { validator: this.checkDates });
   }
 
   get task() {
@@ -32,7 +34,7 @@ export class AddComponent implements OnInit {
   displayFn(task) {
     // this._selectedTask = task._id;
     // console.log('dis ' + this._selectedTask);
-    return task.task;
+    return task.task === null ? '' : task.task;
   }
   // get parentTask() {
   //   this._selectedTask = this.taskGroup.get('parentTask');
@@ -70,5 +72,17 @@ export class AddComponent implements OnInit {
         console.log(tasks);
         this._tasks = tasks;
       });
+  }
+
+  resetField(): void {
+    // this.valueChange.emit("0");
+    this.taskGroup.reset();
+    // this.taskGroup.pristine;
+    // this.taskGroup.untouched;
+  }
+
+  checkDates(group: FormGroup): any {
+    // return this._util.validateDateSelection(group.controls.startDate.value, group.controls.endDate.value);
+    return null;
   }
 }

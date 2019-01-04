@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../task.service';
+import { TaskService } from '../service/task.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Task } from '../task';
+import { Task } from '../model/taskModel';
 import { MatSnackBar } from '@angular/material';
+import { UtilityService } from '../../../utility.service';
 
 @Component({
   selector: 'app-edit',
@@ -17,14 +18,14 @@ export class EditComponent implements OnInit {
   taskId: String;
   _tasks: Task[];
   editTaskGroup: FormGroup;
-  constructor(private _tskSrv: TaskService, private _route: ActivatedRoute, private _fb: FormBuilder, private _router: Router) {
+  constructor(private _tskSrv: TaskService, private _route: ActivatedRoute, private _fb: FormBuilder, private _router: Router, private _util: UtilityService) {
     this.editTaskGroup = this._fb.group({
       task: '',
       priority: '',
       startDate: '',
       endDate: '',
       parentTask: ''
-    });
+    }, { validator: this.checkDates });
   }
 
   ngOnInit() {
@@ -96,6 +97,11 @@ export class EditComponent implements OnInit {
 
   displayFn(task) {
     return task.task;
+  }
+
+  checkDates(group: FormGroup): any {
+    // return this._util.validateDateSelection(group.controls.startDate.value, group.controls.endDate.value);
+    return null;
   }
 
   cancelClick(): void {

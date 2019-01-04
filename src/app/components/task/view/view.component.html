@@ -1,74 +1,92 @@
-<mat-tab-group [selectedIndex]=1>
+<mat-tab-group [selectedIndex]="1">
   <mat-tab label="Add Task">
-    <app-add></app-add>
+    <app-add ></app-add>
   </mat-tab>
   <mat-tab label="View Task">
     <div>
-      <table>
-        <tr>
-          <td>
-            <span>Task:</span>
-          </td>
-          <td [attr.colspan]="2+1">
-            <mat-form-field appearance="fill" class="full-td">
-              <mat-label></mat-label>
-              <input matInput placeholder="">
-            </mat-form-field>
-          </td>
-          <td>
-            <span>Parent Task:</span>
-          </td>
-          <td [attr.colspan]="3">
-            <mat-form-field appearance="fill" class="full-td">
-              <mat-label></mat-label>
-              <input matInput placeholder="">
-            </mat-form-field>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>Priority From:</span>
-          </td>
-          <td>
-            <mat-form-field appearance="fill">
-              <mat-label></mat-label>
-              <input matInput placeholder="">
-            </mat-form-field>
-          </td>
-          <td>
-            <span>Priority To:</span>
-          </td>
-          <td>
-            <mat-form-field appearance="fill">
-              <mat-label></mat-label>
-              <input matInput placeholder="">
-            </mat-form-field>
-          </td>
-          <td>
-            <span>Start Date:</span>
-          </td>
-          <td>
-            <mat-form-field appearance="fill">
-              <mat-label></mat-label>
-              <input matInput placeholder="">
-            </mat-form-field>
-          </td>
-          <td>
-            <span>End Date:</span>
-          </td>
-          <td>
-            <mat-form-field appearance="fill">
-              <mat-label></mat-label>
-              <input matInput placeholder="">
-            </mat-form-field>
-          </td>
-        </tr>
-      </table>
+      <form [formGroup]="searchGroup">
+        <table>
+          <tr>
+            <td>
+              <span>Task:</span>
+            </td>
+            <td [attr.colspan]="2+1">
+              <mat-form-field class="full-td">
+                <input matInput placeholder="" formControlName="taskField">
+              </mat-form-field>
+            </td>
+            <td>
+              <span>Parent Task:</span>
+            </td>
+            <td [attr.colspan]="3">
+              <mat-form-field class="full-td">
+                <input matInput placeholder="" formControlName="parentTaskField">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Priority From:</span>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput placeholder="" formControlName="priorityFromField">
+              </mat-form-field>
+            </td>
+            <td>
+              <span>Priority To:</span>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput placeholder="" formControlName="priorityToField">
+              </mat-form-field>
+            </td>
+            <td>
+              <span>Start Date:</span>
+            </td>
+            <td>
+              <!-- <mat-form-field>
+                <input matInput placeholder="" formControlName="startDateField">
+              </mat-form-field> -->
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" formControlName="startDateField" #startDateField>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </td>
+            <td>
+              <span>End Date:</span>
+            </td>
+            <td>
+              <!-- <mat-form-field>
+                <input matInput placeholder="" formControlName="endDateField">
+              </mat-form-field> -->
+              <mat-form-field>
+                <input matInput [matDatepicker]="endpicker" formControlName="endDateField">
+                <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                <mat-datepicker #endpicker></mat-datepicker>
+                <!-- <mat-error *ngIf="searchGroup.hasError('notValid')">
+                </mat-error> -->
+              </mat-form-field>
+              <span style="color:red; padding-left: 2px" *ngIf="searchGroup.hasError('notValid')">End date should be >=
+                Start Date</span>
+            </td>
+          </tr>
+          <tr>
+            <td [attr.colspan]="8">
+              <div style="float:right;">
+                <button mat-raised-button color='warn' class="btn" (click)="searchTasks()" [disabled]="searchGroup.invalid">Search</button>
+                <button mat-raised-button color='warn' class="btn" (click)="resetFields()">Reset</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </form>
     </div>
     <mat-divider></mat-divider>
     <div>
       <table style="width:100%">
-        <tr *ngFor='let taskObj of tasks'>
+        <tr *ngFor='let taskObj of filteredTasks'>
           <td>
             <div>
               <div>

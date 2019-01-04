@@ -24,7 +24,7 @@ import { EditComponent } from './components/task/edit/edit.component';
 import { ViewComponent } from './components/task/view/view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from '@clr/angular';
-import { TaskService } from './components/task/task.service';
+import { TaskService } from './components/task/service/task.service';
 
 
 const routes: Routes = [

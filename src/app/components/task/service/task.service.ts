@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { UtilityService } from '../../utility.service';
-import { Task } from './task';
+import { UtilityService } from '../../../utility.service';
+import { Task } from '../model/taskModel';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
