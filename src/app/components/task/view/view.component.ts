@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../service/task.service';
-import { Task } from '../model/taskModel'
+import { Task } from '../model/taskModel';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { UtilityService } from '../../../utility.service';
+// import { UtilityService } from '../../../utility.service';
+import { MatTabChangeEvent } from '@angular/material';
+
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -15,7 +17,7 @@ export class ViewComponent implements OnInit {
   searchGroup: FormGroup;
   tabSelected: Number = 1;
 
-  constructor(private _tskSrv: TaskService, private _router: Router, private _fb: FormBuilder, private _util: UtilityService) {
+  constructor(private _tskSrv: TaskService, private _router: Router, private _fb: FormBuilder) {
     this.searchGroup = this._fb.group({
       taskField: undefined,
       parentTaskField: undefined,
@@ -28,6 +30,10 @@ export class ViewComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this._util.getAPI());
+    this.loadTasks();
+  }
+
+  loadTasks(): void {
     this._tskSrv.getTasks()
       .subscribe((tasks) => {
         console.log(tasks);
@@ -41,13 +47,13 @@ export class ViewComponent implements OnInit {
     let parentTask;
     let parentTaskName = '';
 
-    if (parentId === '' || parentId === undefined)
-      parentTask = ''
-    else {
+    if (parentId === '' || parentId === undefined) {
+      parentTask = '';
+    } else {
       parentTask = this.tasks.find(task => this._returnName(task, parentId));
       // console.log('parentTask: ' + JSON.stringify(parentTask));
       // console.log('taskName ' + (parentTask.task));
-      parentTaskName = parentTask.task
+      parentTaskName = parentTask.task;
     }
     // if (parentTask.task === undefined) {
     //   return '';
@@ -59,20 +65,19 @@ export class ViewComponent implements OnInit {
     return parentTask.task;
   }
   _returnName(task, parentId): boolean {
-    let tempTask = task;
+    const tempTask = task;
     // console.log('tempTask._id' + tempTask._id)
     // console.log('parentId' + parentId)
-    if (tempTask._id === parentId)
+    if (tempTask._id === parentId) {
       return true;
-    else
-      return false;
+    } else { return false; }
   }
 
   editView(taskName) {
-    let _selectedTask = this.tasks.find(task => task.task === taskName);
+    const _selectedTask = this.tasks.find(task => task.task === taskName);
     console.log(_selectedTask._id);
     this._router.navigate(['/edit/', _selectedTask._id]);
-    //[routerLink]="['../edit']"
+    // [routerLink]="['../edit']"
   }
 
   resetFields(): void {
@@ -83,18 +88,18 @@ export class ViewComponent implements OnInit {
   searchTasks(): void {
     let tempFilteredTask: Task[];
 
-    let taskVal = this.searchGroup.controls['taskField'].value;
-    let parentTaskVal = this.searchGroup.controls['parentTaskField'].value;
-    let priorityFromVal = this.searchGroup.controls['priorityFromField'].value;
-    let priorityToVal = this.searchGroup.controls['priorityToField'].value;
-    let startDateVal = this.searchGroup.controls['startDateField'].value;
-    let endDateVal = this.searchGroup.controls['endDateField'].value;
-    let priorityFrom = priorityFromVal === null ? 0 : priorityFromVal;
-    let priorityTo = priorityToVal === null ? 30 : priorityToVal;
+    const taskVal = this.searchGroup.controls['taskField'].value;
+    const parentTaskVal = this.searchGroup.controls['parentTaskField'].value;
+    const priorityFromVal = this.searchGroup.controls['priorityFromField'].value;
+    const priorityToVal = this.searchGroup.controls['priorityToField'].value;
+    const startDateVal = this.searchGroup.controls['startDateField'].value;
+    const endDateVal = this.searchGroup.controls['endDateField'].value;
+    const priorityFrom = priorityFromVal === null ? 0 : priorityFromVal;
+    const priorityTo = priorityToVal === null ? 30 : priorityToVal;
 
     console.log('priorityFromVal: ' + priorityFromVal);
-    let startDateDefault = startDateVal == null ? new Date('2018-01-01') : startDateVal;
-    let endDateDefault = endDateVal == null ? new Date('2020-01-01') : endDateVal;
+    const startDateDefault = startDateVal == null ? new Date('2018-01-01') : startDateVal;
+    const endDateDefault = endDateVal == null ? new Date('2020-01-01') : endDateVal;
     // console.log('startDateDefault: ' + new Date(startDateDefault));
     // console.log('Date: ' + new Date('2018-02-02'));
     // console.log('compare:> ' + (new Date('2018-02-02') > new Date(startDateDefault)));
@@ -104,17 +109,17 @@ export class ViewComponent implements OnInit {
     // console.log('endDateDefault:> ' + (new Date('2018-02-02') < new Date(endDateDefault)));
 
     tempFilteredTask = this.filteredTasks;
-    if (taskVal !== null)
+    if (taskVal !== null) {
       tempFilteredTask = tempFilteredTask.filter(item => item.task.indexOf(taskVal) !== -1);
-    if (parentTaskVal !== null)
-      tempFilteredTask = tempFilteredTask.filter(item => item.parentTask.indexOf(parentTaskVal) !== -1);
+    }
+    if (parentTaskVal !== null) { tempFilteredTask = tempFilteredTask.filter(item => item.parentTask.indexOf(parentTaskVal) !== -1); }
 
     tempFilteredTask = tempFilteredTask.filter(item => item.priority >= priorityFrom && item.priority <= priorityTo);
     // console.log('priority: ' + JSON.stringify(tempFilteredTask));
     // Temporary fix to avoid in take of blank values of Start or end date.
-    // If both are blank case can be handled. 
-    // If only one is blank than the it should handle by allowing considering the other extreeme end 
-    // if start date not selected then take the give enddate and default start date  
+    // If both are blank case can be handled.
+    // If only one is blank than the it should handle by allowing considering the other extreeme end
+    // if start date not selected then take the give enddate and default start date
     tempFilteredTask = tempFilteredTask.filter(item => new Date(item.startDate) >= new Date(startDateDefault));
     console.log('Date:' + JSON.stringify(tempFilteredTask));
 
@@ -129,9 +134,6 @@ export class ViewComponent implements OnInit {
   }
 
   checkDates(group: FormGroup): any {
-    // if(this._util)
-    //   return this._util.validateDateSelection(group.controls.startDateField.value, group.controls.endDateField.value);
-
     if ((group.controls.endDateField.value !== null) && group.controls.startDateField.value > group.controls.endDateField.value) {
       console.log("invalid  :" + group.controls.endDateField.value + ":");
       return { notValid: true };
@@ -139,4 +141,18 @@ export class ViewComponent implements OnInit {
     console.log("valid");
     return null;
   }
+
+  onTabChange(event: MatTabChangeEvent) {
+    // console.log('event => ', event);
+    // console.log('index => ', event.index);
+    // console.log('tab => ', event.tab);
+    if (event.index === 1) {
+      this.loadTasks();
+    }
+  }
+
+  // displayCounter(value) {
+  //   console.log(value);
+  //   this.tabSelected = 1;
+  // }
 }

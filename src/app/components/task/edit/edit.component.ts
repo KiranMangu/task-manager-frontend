@@ -14,11 +14,12 @@ import { UtilityService } from '../../../utility.service';
 })
 export class EditComponent implements OnInit {
 
-  _snackBar: MatSnackBar;
+  
   taskId: String;
   _tasks: Task[];
   editTaskGroup: FormGroup;
-  constructor(private _tskSrv: TaskService, private _route: ActivatedRoute, private _fb: FormBuilder, private _router: Router, private _util: UtilityService) {
+  constructor(private _tskSrv: TaskService, private _route: ActivatedRoute,
+    private _fb: FormBuilder, private _router: Router, private _util: UtilityService, private _snackBar: MatSnackBar) {
     this.editTaskGroup = this._fb.group({
       task: '',
       priority: '',
@@ -50,18 +51,16 @@ export class EditComponent implements OnInit {
         endDate: taskDetails.endDate,
         parentTask: this.getTaskName(taskDetails.parentTask)
       });
-    }
-    )
+    });
   }
 
   getTaskName(parentTaskId): Task {
     let taskName: Task;
     // console.log(this._tasks);
     taskName = this._tasks.find(task => task._id === parentTaskId);
-    if (taskName === undefined)
+    if (taskName === undefined) {
       return null;
-    else
-      return taskName;
+    } else { return taskName; }
   }
 
   getTasks(): any {
@@ -82,16 +81,17 @@ export class EditComponent implements OnInit {
     // console.log (this.editTaskGroup.get('startDate').value);
     // console.log (this.editTaskGroup.get('endDate').value);
 
-    let task = this.editTaskGroup.get('task').value;
-    let priority = this.editTaskGroup.get('priority').value;
-    let parentTask = this.editTaskGroup.get('parentTask').value == undefined ? null : this.editTaskGroup.get('parentTask').value._id;
-    let startDate = this.editTaskGroup.get('startDate').value;
-    let endDate = this.editTaskGroup.get('endDate').value;
-    let id = this.taskId;
+    const task = this.editTaskGroup.get('task').value;
+    const priority = this.editTaskGroup.get('priority').value;
+    const parentTask = this.editTaskGroup.get('parentTask').value === undefined ? null : this.editTaskGroup.get('parentTask').value._id;
+    const startDate = this.editTaskGroup.get('startDate').value;
+    const endDate = this.editTaskGroup.get('endDate').value;
+    const id = this.taskId;
 
     this._tskSrv.updateTask(task, startDate, endDate, priority, parentTask, id)
       .subscribe((res) => {
         console.log('Snack Bar');
+        this._snackBar.open("Updates successfully", "OK");
       });
   }
 
@@ -100,7 +100,11 @@ export class EditComponent implements OnInit {
   }
 
   checkDates(group: FormGroup): any {
-    // return this._util.validateDateSelection(group.controls.startDate.value, group.controls.endDate.value);
+    if ((group.controls.endDate.value !== null) && group.controls.startDate.value > group.controls.endDate.value) {
+      console.log("invalid  :" + group.controls.endDate.value + ":");
+      return { notValid: true };
+    }
+    console.log("valid");
     return null;
   }
 

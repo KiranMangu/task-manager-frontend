@@ -1,6 +1,7 @@
-<mat-tab-group [selectedIndex]="1">
+<mat-tab-group [selectedIndex]="tabSelected" (selectedTabChange)="onTabChange($event)">
   <mat-tab label="Add Task">
-    <app-add ></app-add>
+    <app-add></app-add>
+    <!-- <app-add (valueChange)='displayCounter($event)'></app-add> -->
   </mat-tab>
   <mat-tab label="View Task">
     <div>
