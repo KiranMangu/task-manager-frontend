@@ -8,6 +8,8 @@
 # EXPOSE 4200
 # CMD ["ng","serve"]
 # CMD ["echo","testing"]
+
  FROM nginx:latest
- COPY dist /usr/share/nginx/html
- CMD ["echo","testing"]
+ COPY wrapper.sh /
+ COPY dist/frontend /usr/share/nginx/html
+ CMD ["./wrapper.sh"]
