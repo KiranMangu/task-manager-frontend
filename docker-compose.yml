@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  backend:
+    image: kiranbackend
+    ports:
+      - 3031:3031
+  frontend:
+    build: .
+    ports:
+      - 8080:80
+
+#   image: kiranfrontend
+#     ports:
+#     - 8080:80
+
+#   image: kiranfrontend/toolbox
+#     ports:
+#     - 8080:80
