@@ -27,6 +27,7 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    // console.log(this._util.getAPI());
     this._tskSrv.getTasks()
       .subscribe((tasks) => {
         console.log(tasks);
@@ -128,10 +129,14 @@ export class ViewComponent implements OnInit {
   }
 
   checkDates(group: FormGroup): any {
-    this._util.validateDateSelection(group.controls.startDateField.value, group.controls.endDateField.value)
-      .subscribe((validity) => {
-        return validity;
-      });
-    // return null;
+    // if(this._util)
+    //   return this._util.validateDateSelection(group.controls.startDateField.value, group.controls.endDateField.value);
+
+    if ((group.controls.endDateField.value !== null) && group.controls.startDateField.value > group.controls.endDateField.value) {
+      console.log("invalid  :" + group.controls.endDateField.value + ":");
+      return { notValid: true };
+    }
+    console.log("valid");
+    return null;
   }
 }

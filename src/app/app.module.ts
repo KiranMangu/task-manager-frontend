@@ -25,6 +25,7 @@ import { ViewComponent } from './components/task/view/view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClarityModule } from '@clr/angular';
 import { TaskService } from './components/task/service/task.service';
+import { UtilityService } from './utility.service';
 
 
 const routes: Routes = [
@@ -57,7 +58,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [TaskService],
+  providers: [TaskService, UtilityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

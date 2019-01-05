@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
 
-  url: String = 'http://localhost:3031/api'
+  url: String = environment.baseAPIUrl;
   constructor() { }
 
   getAPI(): String {
