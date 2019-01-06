@@ -5,6 +5,7 @@
   </mat-tab>
   <mat-tab label="View Task">
     <div>
+
       <form [formGroup]="searchGroup">
         <table>
           <tr>
@@ -85,7 +86,10 @@
       </form>
     </div>
     <mat-divider></mat-divider>
-    <div>
+    <div *ngIf="!loadingNotcomplete" class="mat-spinner">
+      <mat-progress-spinner style="color:steelblue" mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div *ngIf="loadingNotcomplete">
       <table style="width:100%">
         <tr *ngFor='let taskObj of filteredTasks'>
           <td>
@@ -142,8 +146,9 @@
           </td>
           <td>
             <div>
-              <button mat-raised-button color='primary' (click)='editView(taskObj.task)' class="btn">Edit</button>
-              <button mat-raised-button color='warn' class="btn">End Task</button>
+              <button mat-raised-button color='primary' (click)='editView(taskObj.task)' class="btn" [disabled]="taskObj.finished">Edit</button>
+              <button mat-raised-button color='warn' (click)='completeTask(taskObj._id)' class="btn" [disabled]="taskObj.finished">End
+                Task</button>
             </div>
           </td>
         </tr>

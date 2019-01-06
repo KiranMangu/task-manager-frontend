@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 // import { UtilityService } from '../../../utility.service';
 import { MatTabChangeEvent } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-view',
@@ -16,8 +17,9 @@ export class ViewComponent implements OnInit {
   filteredTasks: Task[];
   searchGroup: FormGroup;
   tabSelected: Number = 1;
+  loadingNotcomplete: Boolean = false;
 
-  constructor(private _tskSrv: TaskService, private _router: Router, private _fb: FormBuilder) {
+  constructor(private _tskSrv: TaskService, private _router: Router, private _fb: FormBuilder, private _snackBar: MatSnackBar) {
     this.searchGroup = this._fb.group({
       taskField: undefined,
       parentTaskField: undefined,
@@ -39,6 +41,7 @@ export class ViewComponent implements OnInit {
         console.log(tasks);
         this.tasks = tasks;
         this.filteredTasks = tasks;
+        this.loadingNotcomplete = true;
         console.log(this.tasks);
       });
   }
@@ -107,8 +110,7 @@ export class ViewComponent implements OnInit {
     // console.log('endDateDefault: ' + endDateDefault);
     // console.log('endDateDefault:< ' + (new Date('2018-02-02') > new Date(endDateDefault)));
     // console.log('endDateDefault:> ' + (new Date('2018-02-02') < new Date(endDateDefault)));
-
-    tempFilteredTask = this.filteredTasks;
+    tempFilteredTask = this.tasks;
     if (taskVal !== null) {
       tempFilteredTask = tempFilteredTask.filter(item => item.task.indexOf(taskVal) !== -1);
     }
@@ -128,9 +130,8 @@ export class ViewComponent implements OnInit {
     //   tempFilteredTask = tempFilteredTask.filter(item => item.task.indexOf(startDateVal) !== -1);
     // if (endDateVal !== undefined)
     //   tempFilteredTask = tempFilteredTask.filter(item => item.task.indexOf(endDateVal) !== -1);
-    console.log('Date:' + JSON.stringify(tempFilteredTask));
+    // console.log('Date:' + JSON.stringify(tempFilteredTask));
     this.filteredTasks = tempFilteredTask;
-
   }
 
   checkDates(group: FormGroup): any {
@@ -140,6 +141,18 @@ export class ViewComponent implements OnInit {
     }
     console.log("valid");
     return null;
+  }
+
+  completeTask(task): void {
+    // console.log('complete: ' + task);
+    this.loadingNotcomplete = false;
+    this._tskSrv.endTask(task)
+      .subscribe((tasks) => {
+        this.loadTasks();
+        this._snackBar.open('Updated the Task as completed', 'OK');
+        console.log(tasks);
+
+      });
   }
 
   onTabChange(event: MatTabChangeEvent) {

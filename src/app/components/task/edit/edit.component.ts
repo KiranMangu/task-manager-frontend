@@ -14,7 +14,7 @@ import { UtilityService } from '../../../utility.service';
 })
 export class EditComponent implements OnInit {
 
-  
+
   taskId: String;
   _tasks: Task[];
   editTaskGroup: FormGroup;
@@ -95,8 +95,12 @@ export class EditComponent implements OnInit {
       });
   }
 
-  displayFn(task) {
-    return task.task;
+  displayFn(task1) {
+    if (task1 === null || task1.task === null || task1.task === undefined) {
+      return '';
+    } else {
+      return task1.task;
+    }
   }
 
   checkDates(group: FormGroup): any {

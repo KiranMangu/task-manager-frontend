@@ -9,7 +9,7 @@ import { MatGridListModule, MatCardModule } from '@angular/material';
 import { MatButtonModule, MatSliderModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
-import { MatAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -50,7 +50,7 @@ const routes: Routes = [
     MatGridListModule, MatCardModule,
     MatButtonModule, MatSliderModule,
     MatDatepickerModule, MatNativeDateModule,
-    MatAutocompleteModule, MatSnackBarModule,
+    MatAutocompleteModule, MatSnackBarModule, MatProgressSpinnerModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,

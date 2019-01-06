@@ -34,7 +34,7 @@ export class TaskService {
   }
 
   updateTask(task, startDate, endDate, priority, parentTask, id): any {
-    let updateTask = {
+    const updateTask = {
       id: id,
       task: task,
       startDate: startDate,
@@ -46,6 +46,9 @@ export class TaskService {
   }
 
   endTask(id): any {
-    this._http.get(`${this.uri}/task/complete`, id);
+    const updateTask = {
+      id: id
+    };
+    return this._http.post(`${this.uri}/task/complete`, updateTask);
   }
 }
