@@ -2,17 +2,37 @@ version: '3'
 
 services:
   backend:
-    image: kiranbackend
+    image: kiranmohanm/meanbackend:1
     ports:
       - 3031:3031
+  
   frontend:
-    build: .
+    image: kiranmohanm/meanfrontend
     ports:
-      - 8080:80
+      - 4201:80
+
+#version: '3'
+
+#services:
+#  backend:
+#    build: ../.../backend/task-manager-backend
+#    ports:
+#      - 3031:3031
+  
+#  frontend:
+#    build: .
+#    ports:
+#      - 4201:80
+      
+#services:
+#  frontend:
+#    build: .
+#    ports:
+#      - 4201:80
 
 #   image: kiranfrontend
 #     ports:
-#     - 8080:80
+#     - 8080:80 
 
 #   image: kiranfrontend/toolbox
 #     ports:
